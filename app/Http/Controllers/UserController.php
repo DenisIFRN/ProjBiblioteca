@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -11,10 +13,18 @@ class UserController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     */    
+     */
+
+     public function __construct()
+    {
+        $this->middleware ('auth');
+    }
+ 
     public function index()
     {
-        $usuarios = User::get();
+
+        $id = Auth::id();
+        $usuarios = User::get()->where('id', $id);
         return view('paginas.user.mostrar', ['usuarios' => $usuarios]);
     }
 
@@ -41,7 +51,7 @@ class UserController extends Controller
         $user->type = 'Aluno';
         $user->matricula = $request->matricula;
         $user->email = $request->email;
-        $user->password = \Hash::make($request->senha);
+        $user->password = Hash::make($request->password);
         $user->remember_token = str_random(10);
 
         $user->save();

@@ -11,11 +11,19 @@
 |
 */
 
-Route::get('/', 'controlePagina@getHome')->name('/');
+Route::resource('registro', 'RegistroController');
 
-Route::get('sobre', 'controlePagina@getSobre')->name('sobre');
+Route::get('/', 'LoginController@loginForm')->name('/');
 
-Route::get('contato', 'controlePagina@getContato')->name('contato');
+Route::post('/login', 'LoginController@login')->name('login');
+
+Route::post('/logout', 'LoginController@logout')->name('logout');
+
+Route::get('/home', 'PaginaController@getHome')->name('/home');
+
+Route::get('sobre', 'PaginaController@getSobre')->name('sobre');
+
+Route::get('contato', 'PaginaController@getContato')->name('contato');
 
 Route::resource('user', 'UserController');
 

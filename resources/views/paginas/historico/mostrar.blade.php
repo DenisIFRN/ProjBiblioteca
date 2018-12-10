@@ -1,18 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Historicos</title>
-</head>
-<body>
+@extends('visual.visualPaginas')
 
+@section('subtitle', 'Histórico')
+
+@section('content')
+	<br><br><br><br>
 	@foreach ($historicos as $historico)
-		Nome Usuario: {{ $usuarios[$i]->nome }} <br>
 		Nome Livro: {{ $livros[$i]->nome }} <br>
 		Data Emprestimo: {{ $historico->dataEmprestimo }} <br>
 		Data Devolução: {{ $historico->dataDevolucao, $i++}} <br>
 		<br><br>
 	@endforeach
 
-	<a href="{{ url('/') }}">Voltar</a>
-</body>
-</html>
+	<a class="btn btn-primary" href="{{ url('/') }}">Voltar</a>
+	<br><br>
+@endsection

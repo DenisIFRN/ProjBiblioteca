@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Emprestimo;
+use App\Historico;
 use App\User;
 use App\Livro;
 
@@ -14,6 +15,12 @@ class EmprestimoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware ('auth');
+    }
+    
     public function index()
     {
         $emprestimos = Emprestimo::get();
@@ -50,15 +57,17 @@ class EmprestimoController extends Controller
      */
     public function store(Request $request)
     {
+
         $emprestimo = new Emprestimo;
         $emprestimo->diasAlocado = $request->dias;
         $emprestimo->situacao = $request->situacao;
         $emprestimo->dataEmprestimo = $request->dtEmprestimo;
-        $emprestimo->dataDevolucao = $request->dtEmprestimo;
+        $emprestimo->dataDevolucao = $request->dtDevolucao;
         $emprestimo->id_usuario = $request->idUsuario;
         $emprestimo->id_livro = $request->idLivro;
 
         $emprestimo->save();
+        
         return view('paginas.emprestimo.cadEmprestimo');
     }
 

@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Emprestimos</title>
-</head>
-<body>
+@extends('visual.visualPaginas')
 
+@section('subtitle', 'Emprestimos')
+
+@section('content')
+	<br><br><br><br>
 	@foreach ($emprestimos as $emprestimo)
 		Nome Usuario: {{ $usuarios[$i]->nome }} <br>
 		Nome Livro: {{ $livros[$i]->nome }} <br>
@@ -15,6 +14,6 @@
 		<br><br>
 	@endforeach
 
-	<a href="{{ url('/') }}">Voltar</a>
-</body>
-</html>
+	<a class="btn btn-primary" href="{{ url('/') }}">Voltar</a>
+	<br><br>
+@endsection

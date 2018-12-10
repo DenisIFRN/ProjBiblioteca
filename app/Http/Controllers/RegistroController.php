@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Historico;
-use App\Emprestimo;
-use App\Livro;
 
-class HistoricoController extends Controller
+use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Auth\RegistersUsers;
+
+class RegistroController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,23 +15,15 @@ class HistoricoController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+
     public function __construct()
     {
-        $this->middleware ('auth');
+        $this->middleware('guest');
     }
-    
+
     public function index()
     {
-        $ids = Auth::id();
-        $historicos = Emprestimo::get()->where('id_usuario', $ids);
-
-        $livros = Emprestimo::where('id_usuario', Auth::id())->leftJoin('livros', 'emprestimos.id_livro', '=', 'livros.id')
-            ->selectRaw('nome')
-            ->orderBy('emprestimos.id')
-            ->get();
-
-        $i = 0;
-        return view('paginas.historico.mostrar', ['historicos' => $historicos, 'livros' => $livros, 'i' => $i]);
+        return view('paginas.login.registro');
     }
 
     /**
@@ -52,7 +44,15 @@ class HistoricoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User;
+        $user->nome = $request->nome;
+        $user->type = 'Aluno';
+        $user->matricula = $request->matricula;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+
+        $user->save();
+        return view('paginas.login.login');
     }
 
     /**
